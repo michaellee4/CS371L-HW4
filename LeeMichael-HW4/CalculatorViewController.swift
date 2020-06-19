@@ -27,22 +27,33 @@ class CalculatorViewController: UIViewController {
         let operandOne: Float? = Float(operandOneTextField.text ?? "")
         let operandTwo: Float? = Float(operandTwoTextField.text ?? "")
         
-        if operandOne == nil || operandTwo == nil {
+        if let valueOne = operandOne, let valueTwo = operandTwo {
+            if currentOperator == "+" {
+                resultTextField.text = String(valueOne + valueTwo)
+            }
+            else if currentOperator == "-" {
+                resultTextField.text = String(valueOne - valueTwo)
+            }
+            else if currentOperator == "*" {
+                resultTextField.text = String(valueOne * valueTwo)
+            }
+            else if currentOperator == "/" {
+                resultTextField.text = String(valueOne / valueTwo)
+            }
+        }
+        else {
             resultTextField.text = "Invalid Input"
-            return
         }
-        
-        if currentOperator == "+" {
-            resultTextField.text = String(operandOne! + operandTwo!)
-        }
-        else if currentOperator == "-" {
-            resultTextField.text = String(operandOne! - operandTwo!)
-        }
-        else if currentOperator == "*" {
-            resultTextField.text = String(operandOne! * operandTwo!)
-        }
-        else if currentOperator == "/" {
-            resultTextField.text = String(operandOne! / operandTwo!)
-        }
+    }
+    
+    // Taken from Professor Bulko's Swift Snippets page
+    // The following code removes the software keyboard when the background is tapped
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
